@@ -9,7 +9,7 @@ public class Game {
 
      public Game(int width, int height) {
          display = new Display(width, height);
-         rectangle = new Rectangle(0,0,50,50);
+         rectangle = new Rectangle(0,0,100,80);
      }
 
      public Rectangle getRectangle() {
@@ -18,15 +18,15 @@ public class Game {
 
      public void update(){
           rectangle.setLocation(
-                  (int) rectangle.getX() + 1 * xDirection,
-                  (int) rectangle.getY() + 1 * yDirection
+                  (int) rectangle.getX() + 3 * xDirection,
+                  (int) rectangle.getY() + 3 * yDirection
           );
 
-          if ((int) rectangle.getX() > display.getWidth() - 50 - 16
+          if ((int) rectangle.getX() > display.getWidth() - (int) rectangle.getWidth() - 16
           || (int) rectangle.getX() < 0){
                xDirection *= -1;
           }
-          if ((int) rectangle.getY() > display.getHeight() - 50 - 39
+          if ((int) rectangle.getY() > display.getHeight() - (int) rectangle.getHeight() - 39
           || (int) rectangle.getY() < 0){
                yDirection *= -1;
           }
