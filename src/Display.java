@@ -30,6 +30,16 @@ public class Display extends JFrame {
         graphics.setColor(Color.BLACK);
         graphics.fillRect(0,0,canvas.getWidth(),canvas.getHeight());
 
+        Rectangle rectangle = game.getRectangle();
+        graphics.setColor(Color.RED);
+        graphics.fillRect(
+                (int) rectangle.getX(),
+                (int) rectangle.getY(),
+                (int) rectangle.getWidth(),
+                (int) rectangle.getHeight()
+
+        );
+
         graphics.dispose();
         bufferStrategy.show();
     }
