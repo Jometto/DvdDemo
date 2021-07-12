@@ -7,10 +7,13 @@ public class Square extends GameObject{
     private int yDirection = 1;
     private int displayWidth;
     private int displayHeight;
+    private Obstacle obstacle;
 
-    public Square(int displayWidth, int displayHeight){
+    public Square(int displayWidth, int displayHeight,Position position ,Obstacle obstacle){
         this.displayWidth = displayWidth;
         this.displayHeight = displayHeight;
+        this.position = position;
+        this.obstacle = obstacle;
     }
 
 
@@ -23,6 +26,16 @@ public class Square extends GameObject{
         }
         if (position.getY() > displayHeight - size.getHeight() || position.getY() < 0){
             yDirection *= -1;
+        }
+
+        // Collision with the obstacles
+
+        if (position.getX() + size.getWidth() > obstacle.getPosition().getX()
+                && position.getX() < obstacle.getPosition().getX()
+           || position.getX() < obstacle.getPosition().getX() + obstacle.getSize().getWidth()
+                && position.getX() + size.getWidth() > obstacle.getPosition().getX() + obstacle.size.getWidth())
+        {
+            xDirection *= -1;
         }
     }
 

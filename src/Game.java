@@ -8,8 +8,15 @@ public class Game {
 
      public Game(int width, int height) {
           display = new Display(width, height);
+
+          Obstacle obstacle = new Obstacle(new Position(375,0),new Size(50,600));
+          Square player = new Square(width,height,new Position(50,50), obstacle);
+          Square player2 = new Square(width,height,new Position(700,50), obstacle);
+
           gameObjects = new ArrayList<>();
-          gameObjects.add(new Square(width,height));
+          gameObjects.add(player);
+          gameObjects.add(player2);
+          gameObjects.add(obstacle);
      }
 
      public void update() {
