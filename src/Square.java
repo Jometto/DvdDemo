@@ -73,18 +73,24 @@ public class Square extends GameObject{
             colVer = false;
         }
         */
-        if(position.getX() + size.getWidth() > obstacle.getPosition().getX() && isColVer()
-        && position.getX() < obstacle.getPosition().getX() && xDirection == 1){
-            xDirection *= -1;
-        } else if(position.getY() + size.getHeight() > obstacle.getPosition().getY() && isColHor()
-        && position.getY() < obstacle.getPosition().getY() && yDirection == 1){
-            yDirection *= -1;
-        } else if(position.getX() < obstacle.getPosition().getX() + obstacle.getSize().getWidth() && isColVer()
-        && position.getX() + size.getWidth() > obstacle.getPosition().getX() + obstacle.getSize().getWidth() && xDirection == -1){
-            xDirection *= -1;
-        } else if(position.getY() < obstacle.getPosition().getY() + obstacle.getSize().getHeight() && isColHor()
-                && position.getY() + size.getHeight() > obstacle.getPosition().getY() + obstacle.getSize().getHeight() && yDirection == -1){
-            yDirection *= -1;
+
+        if (isColHor()){
+            if(position.getY() + size.getHeight() > obstacle.getPosition().getY()
+                    && position.getY() + size.getHeight() - 4 < obstacle.getPosition().getY() && yDirection == 1){
+                yDirection *= -1;
+            } else if(position.getY() < obstacle.getPosition().getY() + obstacle.getSize().getHeight()
+                    && position.getY() + 4 > obstacle.getPosition().getY() + obstacle.getSize().getHeight() && yDirection == -1){
+                yDirection *= -1;
+            }
+        }
+        if (isColVer()) {
+            if(position.getX() + size.getWidth() > obstacle.getPosition().getX() && isColVer()
+                    && position.getX() + size.getWidth() - 4 < obstacle.getPosition().getX() && xDirection == 1){
+                xDirection *= -1;
+            }else if(position.getX() < obstacle.getPosition().getX() + obstacle.getSize().getWidth() && isColVer()
+                    && position.getX() + 4 > obstacle.getPosition().getX() + obstacle.getSize().getWidth() && xDirection == -1){
+                xDirection *= -1;
+            }
         }
     }
 

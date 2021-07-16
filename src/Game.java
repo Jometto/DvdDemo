@@ -10,6 +10,7 @@ public class Game {
           display = new Display(width, height);
 
           Obstacle obstacle = new Obstacle(new Position(300,200),new Size(200,200));
+          //Obstacle obstacle2 = new Obstacle(new Position(400,550),new Size(400,50));
           Square player = new Square(width,height,new Position(50,50), obstacle);
           Square player2 = new Square(width,height,new Position(700,50), obstacle);
 
@@ -17,6 +18,7 @@ public class Game {
           gameObjects.add(player);
           gameObjects.add(player2);
           gameObjects.add(obstacle);
+          //gameObjects.add(obstacle2);
      }
 
      public void update() {
