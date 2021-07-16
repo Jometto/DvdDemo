@@ -8,6 +8,8 @@ public class Square extends GameObject{
     private int displayWidth;
     private int displayHeight;
     private Obstacle obstacle;
+    private boolean colHor = false;
+    private boolean colVer = false;
 
     public Square(int displayWidth, int displayHeight,Position position ,Obstacle obstacle){
         this.displayWidth = displayWidth;
@@ -16,6 +18,22 @@ public class Square extends GameObject{
         this.obstacle = obstacle;
     }
 
+    public boolean checkCollisionsHor(){
+        if (colVer == true){
+            xDirection *= -1;
+            colHor = false;
+            return true;
+        }
+        return false;
+    }
+    public boolean isColVer(){
+        return(position.getY() + size.getHeight() > obstacle.getPosition().getY()
+        && position.getY() < obstacle.getPosition().getY() + obstacle.getSize().getHeight());
+    }
+    private boolean isColHor() {
+        return(position.getX() + size.getWidth() > obstacle.getPosition().getX()
+        && position.getX() < obstacle.getPosition().getX() + obstacle.getSize().getWidth());
+    }
 
     @Override
     public void update() {
@@ -24,20 +42,53 @@ public class Square extends GameObject{
         if (position.getX() > displayWidth - size.getWidth() || position.getX() < 0){
             xDirection *= -1;
         }
-        if (position.getY() > displayHeight - size.getHeight() || position.getY() < 0){
+        if (position.getY() + size.getHeight() > displayHeight|| position.getY() < 0){
             yDirection *= -1;
         }
 
         // Collision with the obstacles
 
-        if (position.getX() + size.getWidth() > obstacle.getPosition().getX()
+        /*if (position.getX() + size.getWidth() > obstacle.getPosition().getX()
                 && position.getX() < obstacle.getPosition().getX()
+                && xDirection == 1
            || position.getX() < obstacle.getPosition().getX() + obstacle.getSize().getWidth()
-                && position.getX() + size.getWidth() > obstacle.getPosition().getX() + obstacle.size.getWidth())
+                && position.getX() + size.getWidth() > obstacle.getPosition().getX() + obstacle.size.getWidth()
+                && xDirection == -1)
         {
+            colHor = true;
+            checkCollisionsHor();
+        } else {
+            colHor = false;
+        }
+        if (position.getY() + size.getHeight() > obstacle.getPosition().getY()
+                && position.getY() < obstacle.getPosition().getY()
+                && yDirection == 1
+            || position.getY() < obstacle.getPosition().getY() + obstacle.getSize().getHeight()
+                && position.getY() + size.getHeight() > obstacle.getPosition().getY() + obstacle.size.getHeight()
+                && yDirection == -1)
+        {
+            colVer = true;
+            checkCollisionsVer();
+        } else {
+            colVer = false;
+        }
+        */
+        if(position.getX() + size.getWidth() > obstacle.getPosition().getX() && isColVer()
+        && position.getX() < obstacle.getPosition().getX() && xDirection == 1){
             xDirection *= -1;
+        } else if(position.getY() + size.getHeight() > obstacle.getPosition().getY() && isColHor()
+        && position.getY() < obstacle.getPosition().getY() && yDirection == 1){
+            yDirection *= -1;
+        } else if(position.getX() < obstacle.getPosition().getX() + obstacle.getSize().getWidth() && isColVer()
+        && position.getX() + size.getWidth() > obstacle.getPosition().getX() + obstacle.getSize().getWidth() && xDirection == -1){
+            xDirection *= -1;
+        } else if(position.getY() < obstacle.getPosition().getY() + obstacle.getSize().getHeight() && isColHor()
+                && position.getY() + size.getHeight() > obstacle.getPosition().getY() + obstacle.getSize().getHeight() && yDirection == -1){
+            yDirection *= -1;
         }
     }
+
+
 
     @Override
     public Image getSprite() {
