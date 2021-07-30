@@ -7,30 +7,22 @@ public class Square extends GameObject{
     private int yDirection = 1;
     private int displayWidth;
     private int displayHeight;
-    private Obstacle obstacle;
+    private Obstacle[] obstacles;
     private boolean colHor = false;
     private boolean colVer = false;
 
-    public Square(int displayWidth, int displayHeight,Position position ,Obstacle obstacle){
+    public Square(int displayWidth, int displayHeight, Position position , Obstacle[] obstacles){
         this.displayWidth = displayWidth;
         this.displayHeight = displayHeight;
         this.position = position;
-        this.obstacle = obstacle;
+        this.obstacles = obstacles;
     }
 
-    public boolean checkCollisionsHor(){
-        if (colVer == true){
-            xDirection *= -1;
-            colHor = false;
-            return true;
-        }
-        return false;
-    }
-    public boolean isColVer(){
+    public boolean isColVer(Obstacle obstacle){
         return(position.getY() + size.getHeight() > obstacle.getPosition().getY()
         && position.getY() < obstacle.getPosition().getY() + obstacle.getSize().getHeight());
     }
-    private boolean isColHor() {
+    private boolean isColHor(Obstacle obstacle) {
         return(position.getX() + size.getWidth() > obstacle.getPosition().getX()
         && position.getX() < obstacle.getPosition().getX() + obstacle.getSize().getWidth());
     }
@@ -46,50 +38,24 @@ public class Square extends GameObject{
             yDirection *= -1;
         }
 
-        // Collision with the obstacles
-
-        /*if (position.getX() + size.getWidth() > obstacle.getPosition().getX()
-                && position.getX() < obstacle.getPosition().getX()
-                && xDirection == 1
-           || position.getX() < obstacle.getPosition().getX() + obstacle.getSize().getWidth()
-                && position.getX() + size.getWidth() > obstacle.getPosition().getX() + obstacle.size.getWidth()
-                && xDirection == -1)
-        {
-            colHor = true;
-            checkCollisionsHor();
-        } else {
-            colHor = false;
-        }
-        if (position.getY() + size.getHeight() > obstacle.getPosition().getY()
-                && position.getY() < obstacle.getPosition().getY()
-                && yDirection == 1
-            || position.getY() < obstacle.getPosition().getY() + obstacle.getSize().getHeight()
-                && position.getY() + size.getHeight() > obstacle.getPosition().getY() + obstacle.size.getHeight()
-                && yDirection == -1)
-        {
-            colVer = true;
-            checkCollisionsVer();
-        } else {
-            colVer = false;
-        }
-        */
-
-        if (isColHor()){
-            if(position.getY() + size.getHeight() > obstacle.getPosition().getY()
-                    && position.getY() + size.getHeight() - 4 < obstacle.getPosition().getY() && yDirection == 1){
-                yDirection *= -1;
-            } else if(position.getY() < obstacle.getPosition().getY() + obstacle.getSize().getHeight()
-                    && position.getY() + 4 > obstacle.getPosition().getY() + obstacle.getSize().getHeight() && yDirection == -1){
-                yDirection *= -1;
+        for (int i = 0; i < obstacles.length; i++) {
+            if (isColHor(obstacles[i])){
+                if(position.getY() + size.getHeight() > obstacles[i].getPosition().getY()
+                        && position.getY() + size.getHeight() - 4 < obstacles[i].getPosition().getY() && yDirection == 1){
+                    yDirection *= -1;
+                } else if(position.getY() < obstacles[i].getPosition().getY() + obstacles[i].getSize().getHeight()
+                        && position.getY() + 4 > obstacles[i].getPosition().getY() + obstacles[i].getSize().getHeight() && yDirection == -1){
+                    yDirection *= -1;
+                }
             }
-        }
-        if (isColVer()) {
-            if(position.getX() + size.getWidth() > obstacle.getPosition().getX() && isColVer()
-                    && position.getX() + size.getWidth() - 4 < obstacle.getPosition().getX() && xDirection == 1){
-                xDirection *= -1;
-            }else if(position.getX() < obstacle.getPosition().getX() + obstacle.getSize().getWidth() && isColVer()
-                    && position.getX() + 4 > obstacle.getPosition().getX() + obstacle.getSize().getWidth() && xDirection == -1){
-                xDirection *= -1;
+            if (isColVer(obstacles[i])) {
+                if(position.getX() + size.getWidth() > obstacles[i].getPosition().getX() && isColVer(obstacles[i])
+                        && position.getX() + size.getWidth() - 4 < obstacles[i].getPosition().getX() && xDirection == 1){
+                    xDirection *= -1;
+                }else if(position.getX() < obstacles[i].getPosition().getX() + obstacles[i].getSize().getWidth() && isColVer(obstacles[i])
+                        && position.getX() + 4 > obstacles[i].getPosition().getX() + obstacles[i].getSize().getWidth() && xDirection == -1){
+                    xDirection *= -1;
+                }
             }
         }
     }
